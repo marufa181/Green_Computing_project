@@ -29,10 +29,12 @@ Output: ../data/bd_grid_carbon_intensity_real.csv
 """
 
 import numpy as np
+from pathlib import Path
 import pandas as pd
 
-SRC = "/home/claude/gcp_real/data/PGCB_raw_source.xlsx"
-OUT = "/home/claude/gcp_real/data/bd_grid_carbon_intensity_real.csv"
+ROOT = Path(__file__).resolve().parent.parent   # project root (works from any folder)
+SRC = ROOT / "data" / "PGCB_raw_source.xlsx"
+OUT = ROOT / "data" / "bd_grid_carbon_intensity_real.csv"
 
 FUEL_COLS = ["gas", "liquid_fuel", "coal", "hydro", "solar", "wind",
              "india_bheramara_hvdc", "india_tripura", "india_adani", "nepal"]
