@@ -27,6 +27,7 @@ Outputs:
 """
 
 import numpy as np
+from pathlib import Path
 import pandas as pd
 import matplotlib
 matplotlib.use("Agg")
@@ -35,9 +36,11 @@ import matplotlib.pyplot as plt
 RNG_SEED = 7
 rng = np.random.default_rng(RNG_SEED)
 
-DATA_PATH = "/home/claude/gcp_real/data/bd_grid_carbon_intensity_real.csv"
-FORECASTS_PATH = "/home/claude/gcp_real/results/test_period_forecasts.csv"
-RESULTS_DIR = "/home/claude/gcp_real/results"
+ROOT = Path(__file__).resolve().parent.parent   # project root (works from any folder)
+DATA_PATH = ROOT / "data" / "bd_grid_carbon_intensity_real.csv"
+FORECASTS_PATH = ROOT / "results" / "test_period_forecasts.csv"
+RESULTS_DIR = ROOT / "results"
+RESULTS_DIR.mkdir(exist_ok=True)
 HORIZON = 6
 CAPACITY_PER_HOUR = 2   # max jobs that can start execution in any given hour
 N_JOBS = 3000
@@ -97,7 +100,7 @@ def estimated_ci(now_ts, target_ts):
     if delta_h <= 0:
         return actual_ci_by_ts.get(now_ts, np.nan)
     if now_ts in forecast_row_by_ts.index and delta_h <= HORIZON:
-        return forecast_row_by_ts.loc[now_ts, f"lstm_forecast_h{delta_h}"]
+        return forecast_row_by_ts.loc[now_ts, f"rf_forecast_h{delta_h}"]
     # fallback: training-period hour-of-day climatology
     return climatology.loc[target_ts.hour]
 
