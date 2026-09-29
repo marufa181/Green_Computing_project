@@ -172,9 +172,10 @@ forecast_export.to_csv(f"{RESULTS_DIR}/test_period_forecasts.csv", index=False)
 # ---------------------------------------------------------------
 plot_n = 24 * 7
 plt.figure(figsize=(11, 4.5))
-plt.plot(test_timestamps[:plot_n], y_test[:plot_n, 0], label="Actual", linewidth=1.6)
-plt.plot(test_timestamps[:plot_n], rf_pred[:plot_n, 0], label="Random Forest (1h-ahead)", linewidth=1.3)
-plt.plot(test_timestamps[:plot_n], persistence_pred[:plot_n, 0], label="Persistence", linewidth=1, linestyle="--", alpha=0.7)
+plt.plot(test_timestamps[:plot_n], y_test[:plot_n, 0], label="Actual", linewidth=1.8, color="#1f4e8c", zorder=5)
+plt.plot(test_timestamps[:plot_n], linreg_pred[:plot_n, 0], label="Linear Regression (1h-ahead) — best model", linewidth=1.4, color="#d62728")
+plt.plot(test_timestamps[:plot_n], rf_pred[:plot_n, 0], label="Random Forest (1h-ahead)", linewidth=1.1, color="#ff7f0e", alpha=0.85)
+plt.plot(test_timestamps[:plot_n], persistence_pred[:plot_n, 0], label="Persistence", linewidth=1, linestyle="--", color="#2ca02c", alpha=0.7)
 plt.xlabel("Time")
 plt.ylabel("Carbon intensity (gCO2/kWh)")
 plt.title("1-Hour-Ahead Carbon Intensity Forecast vs Actual (first 7 days of test period)")
